@@ -6,14 +6,9 @@
     position: fixed;
     width: 0;
     top: 0;
-    right: 0;
     height: 100%;
     background-color: #000;
 }
 
 #pageslide-content {
-}
-
-#pageslide-content h2 {
-    color: #C60;
 }
