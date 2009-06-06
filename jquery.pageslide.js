@@ -5,9 +5,9 @@
 		    width:          "300px", // Accepts fixed widths
 		    duration:       "normal", // Accepts standard jQuery effects speeds (i.e. fast, normal or milliseconds)
 		    direction:      "left", // default direction is left.
-		    start:          function(){console.log('start')},
-		    stop:           function(){console.log('stop')},
-		    complete:       function(){console.log('complete')}
+		    start:          function(){},
+		    stop:           function(){},
+		    complete:       function(){}
 		}, options);
 		
 		function _initialize() {
