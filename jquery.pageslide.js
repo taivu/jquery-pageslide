@@ -5,7 +5,7 @@
 		    width:          "300px", // Accepts fixed widths
 		    duration:       "normal", // Accepts standard jQuery effects speeds (i.e. fast, normal or milliseconds)
 		    direction:      "left", // default direction is left.
-		    modal:          false, // if true, the only way to close the pageslide is to define an explicit close class. 
+		    modal:          true, // if true, the only way to close the pageslide is to define an explicit close class. 
 		    start:          function(){},
 		    stop:           function(){},
 		    complete:       function(){}
@@ -18,11 +18,12 @@
       width: '0',
       top: '0',
       height: '100%',
-      zIndex:'1'
+      zIndex:'999'
 		};
 		
 		pageslide_body_wrap_css = {
-		  position: 'relative'
+		  position: 'relative',
+		  zIndex: '0'
 		};
 		
 		pageslide_blanket_css = { 
@@ -33,7 +34,7 @@
 	    width: '100%', 
 	    opacity: '0.0',
 	    backgroundColor: 'black',
-	    zIndex: '0',
+	    zIndex: '1',
 	    display: 'none'
 	  };
 		
