@@ -44,9 +44,7 @@
 	    
 	    // If a user clicks the document, we should hide the pageslide
 	    // and override that click functionality for the slide pane itself
-	    $(document).click(function() {
-	      _closeSlide();
-	    });
+	    $(document).click(function(elm) { _closeSlide(elm); });
 	    
 	    // Callback events for window resizing
 	    $(window).resize(function(){
@@ -79,8 +77,8 @@
   		          .queue(function(){
   		            $(this).dequeue();
   		            // add hook for a close button
-  		            $(this).find('.pageslide-close').click(function(){
-  		              _closeSlide();
+  		            $(this).find('.pageslide-close').click(function(elm){
+  		              _closeSlide(elm);
   		              $(this).find('pageslide-close').unbind('click');
   		            });
   		            settings.complete();
@@ -91,14 +89,16 @@
 		};
 		
 		function _closeSlide(elm) {
-		  settings.start();
-		  direction = (settings.direction == "left") ? {left: "0"} : {right: "0"};
-		  $("#pageslide-body-wrap").animate(direction, settings.duration);
-	    $("#pageslide-slide-wrap").animate({width: "0"}, settings.duration, function() {
-	      $("#pageslide-content").empty();
-        settings.stop();
-        settings.complete();
-      });
+		  if ($(elm)[0].button != 2) { // if not right click.
+  		  settings.start();
+  		  direction = (settings.direction == "left") ? {left: "0"} : {right: "0"};
+  		  $("#pageslide-body-wrap").animate(direction, settings.duration);
+  	    $("#pageslide-slide-wrap").animate({width: "0"}, settings.duration, function() {
+  	      $("#pageslide-content").empty();
+          settings.stop();
+          settings.complete();
+        });
+      }
 		}
 		
     // Initalize pageslide, if it hasn't already been done.
