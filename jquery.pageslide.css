@@ -5,3 +5,10 @@
 #pageslide-content h2 {
   color: #C60;
 }
+
+.pageslide-close {
+  font-size: 12px;
+  font-weight: bold;
+  padding:10px;
+  border: 1px solid #C60;
+}
