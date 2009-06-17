@@ -5,7 +5,7 @@
 		    width:          "300px", // Accepts fixed widths
 		    duration:       "normal", // Accepts standard jQuery effects speeds (i.e. fast, normal or milliseconds)
 		    direction:      "left", // default direction is left.
-		    modal:          true, // if true, the only way to close the pageslide is to define an explicit close class. 
+		    modal:          false, // if true, the only way to close the pageslide is to define an explicit close class. 
 		    start:          function(){},
 		    stop:           function(){},
 		    complete:       function(){}
@@ -64,12 +64,12 @@
 	    $("body").append( psSlideWrap );
     
 	    $("#pageslide-slide-wrap").click(function(){ return false; });
-
-      
 	    // If a user clicks the document, we should hide the pageslide
 	    // and override that click functionality for the slide pane itself
 	    if (settings.modal != true) {
-	      $(document).click(function(elm) { _closeSlide(elm); });
+	      $(document).click(function(elm) {
+	        _closeSlide(elm); 
+	      });
 	    }
 	    
 	    // Callback events for window resizing
@@ -89,9 +89,7 @@
 		  else {
 		    direction = {left:"-"+settings.width};
 		    $("#pageslide-slide-wrap").css({right:0});
-		    
 		  };
-		  
     	$("#pageslide-slide-wrap").animate({width: settings.width}, settings.duration);
 		  $("#pageslide-body-wrap").animate(direction, settings.duration, function() {
 		    settings.stop();
@@ -102,11 +100,18 @@
   		        $("#pageslide-content").html(data)
   		          .queue(function(){
   		            $(this).dequeue();
+  		            
+  		            // restore working order to all anchors
+  		            $("#pageslide-slide-wrap a").unbind('click').click(function(elm){
+  		              document.location.href = elm.target.href;
+  		            });
+  		            
   		            // add hook for a close button
-  		            $(this).find('.pageslide-close').click(function(elm){
+  		            $(this).find('.pageslide-close').unbind('click').click(function(elm){
   		              _closeSlide(elm);
   		              $(this).find('pageslide-close').unbind('click');
   		            });
+  		            
   		            settings.complete();
   		          });
   		      }
