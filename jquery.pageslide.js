@@ -1,7 +1,7 @@
 (function($){
   $.fn.pageSlide = function(options) {
     
-    settings = $.extend({
+    var settings = $.extend({
 		    width:          "300px", // Accepts fixed widths
 		    duration:       "normal", // Accepts standard jQuery effects speeds (i.e. fast, normal or milliseconds)
 		    direction:      "left", // default direction is left.
@@ -13,7 +13,7 @@
 		
 		// these are the minimum css requirements for the pageslide elements introduced in this plugin.
 		
-		pageslide_slide_wrap_css = {
+		var pageslide_slide_wrap_css = {
 		  position: 'fixed',
       width: '0',
       top: '0',
@@ -21,12 +21,12 @@
       zIndex:'999'
 		};
 		
-		pageslide_body_wrap_css = {
+		var pageslide_body_wrap_css = {
 		  position: 'relative',
 		  zIndex: '0'
 		};
 		
-		pageslide_blanket_css = { 
+		var pageslide_blanket_css = { 
 	    position: 'absolute',
 	    top: '0px',
 	    left: '0px',
@@ -38,38 +38,44 @@
 	    display: 'none'
 	  };
 		
-		function _initialize() {
+		function _initialize(anchor) {
+      
       // Create and prepare elements for pageSlide
-      var psBodyWrap = document.createElement("div");
-      $(psBodyWrap).css(pageslide_body_wrap_css);
-      $(psBodyWrap).attr("id","pageslide-body-wrap").width( $("body").width() );
-    
-      var psSlideContent = document.createElement("div");
-      $(psSlideContent).attr("id","pageslide-content").width( settings.width );
-    
-      var psSlideWrap = document.createElement("div");
-      $(psSlideWrap).css(pageslide_slide_wrap_css);
-      $(psSlideWrap).attr("id","pageslide-slide-wrap").append( psSlideContent );
+      
+      if ($("#pageslide-body-wrap").size() == 0) {
+        var psBodyWrap = document.createElement("div");
+        $(psBodyWrap).css(pageslide_body_wrap_css);
+        $(psBodyWrap).attr("id","pageslide-body-wrap").width( $("body").width() );
+        $("body").contents().wrapAll( psBodyWrap );
+  	    
+      }
+
+      if ($("#pageslide-content").size() == 0) {
+        var psSlideContent = document.createElement("div");
+        $(psSlideContent).attr("id","pageslide-content").width( settings.width );
+      }
+
+      if ($("#pageslide-slide-wrap").size() == 0) {
+        var psSlideWrap = document.createElement("div");
+        $(psSlideWrap).css(pageslide_slide_wrap_css);
+        $(psSlideWrap).attr("id","pageslide-slide-wrap").append( psSlideContent );
+        $("body").append( psSlideWrap );
+  	    
+      }
       
       // introduce the blanket if modal option is set to true.
-      if (settings.modal == true) {
+      if ($("#pageslide-blanket").size() == 0 && settings.modal == true) {
         var psSlideBlanket = document.createElement("div");
         $(psSlideBlanket).css(pageslide_blanket_css);
         $(psSlideBlanket).attr("id","pageslide-blanket");
+        $("body").append( psSlideBlanket );
+  	    $("#pageslide-blanket").click(function(){ return false; });
       }
-      
-      // Wrap and append so that we have the slide containers
-	    $("body").contents().wrapAll( psBodyWrap );
-	    $("body").append( psSlideBlanket );
-	    $("body").append( psSlideWrap );
-    
+          
 	    $("#pageslide-slide-wrap").click(function(){ return false; });
-	    // If a user clicks the document, we should hide the pageslide
-	    // and override that click functionality for the slide pane itself
+	    
 	    if (settings.modal != true) {
-	      $(document).click(function(elm) {
-	        _closeSlide(elm); 
-	      });
+	      $(document).unbind('click').click(function(elm) { _closeSlide(elm); return false });
 	    }
 	    
 	    // Callback events for window resizing
@@ -120,13 +126,16 @@
 		};
 		
 		function _closeSlide(elm) {
-		  if ($(elm)[0].button != 2) { // if not right click.
+		  if ($(elm)[0].button != 2 && $("#pageslide-slide-wrap").css('width') != "0px") { // if not right click.
 		    _hideBlanket();
   		  settings.start();
   		  direction = (settings.direction == "left") ? {left: "0"} : {right: "0"};
-  		  $("#pageslide-body-wrap").animate(direction, settings.duration);
+  		  $("#pageslide-body-wrap").animate({left: "0"}, settings.duration);
   	    $("#pageslide-slide-wrap").animate({width: "0"}, settings.duration, function() {
   	      $("#pageslide-content").empty();
+  	      // clear bug
+  	      $('#pageslide-body-wrap, #pageslide-slide-wrap').css('left','');
+  	      $('#pageslide-body-wrap, #pageslide-slide-wrap').css('right','');
           settings.stop();
           settings.complete();
         });
@@ -151,8 +160,7 @@
 	  
 		
     // Initalize pageslide, if it hasn't already been done.
-    if($("#pageslide-body-wrap").length == 0) _initialize();
-    
+    _initialize(this);
     return this.each(function(){
       $(this).unbind("click").bind("click", function(){
     	  _openSlide(this);
