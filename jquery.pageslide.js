@@ -129,8 +129,8 @@
 		  if ($(elm)[0].button != 2 && $("#pageslide-slide-wrap").css('width') != "0px") { // if not right click.
 		    _hideBlanket();
   		  settings.start();
-  		  direction = (settings.direction == "left") ? {left: "0"} : {right: "0"};
-  		  $("#pageslide-body-wrap").animate({left: "0"}, settings.duration);
+  		  direction = ($("#pageslide-slide-wrap").css("left") != "0px") ? {left: "0"} : {right: "0"};
+  		  $("#pageslide-body-wrap").animate(direction, settings.duration);
   	    $("#pageslide-slide-wrap").animate({width: "0"}, settings.duration, function() {
   	      $("#pageslide-content").empty();
   	      // clear bug
