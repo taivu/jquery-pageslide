@@ -71,6 +71,21 @@ If you want to have multiple slides on the same page, simply define more!
 $("#foobar").pageSlide({width:'150px', direction:'right'});
 </code></pre>
 
+h3. What are all the different options I can pass into PageSlide?
+
+Here they are:
+
+<pre><code>var settings = $.extend({
+width:          "300px", // Accepts fixed widths
+duration:       "normal", // Accepts standard jQuery effects speeds (i.e. fast, normal or milliseconds)
+direction:      "left", // default direction is left.
+modal:          false, // if true, the only way to close the pageslide is to define an explicit close class. 
+start:          function(){}, // event trigger that fires at the start of every open and close.
+stop:           function(){}, // event trigger that fires at the end of every open and close.
+complete:       function(){} // event trigger that fires once an open or close has completed.
+}, options);
+</code></pre>
+
 h2. I found a BUG! or I want it to do THIS!
 
 Please file a ticket on our github issues tracker, and we will will address them all.
