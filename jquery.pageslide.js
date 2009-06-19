@@ -8,7 +8,8 @@
 		    modal:          false, // if true, the only way to close the pageslide is to define an explicit close class. 
 		    start:          function(){}, // event trigger that fires at the start of every open and close.
 		    stop:           function(){}, // event trigger that fires at the end of every open and close.
-		    complete:       function(){} // event trigger that fires once an open or close has completed.
+		    complete:       function(){}, // event trigger that fires once an open or close has completed.
+		    _identifier: $(this)
 		}, options);
 		
 		// these are the minimum css requirements for the pageslide elements introduced in this plugin.
@@ -67,13 +68,7 @@
         $("body").append( psSlideBlanket );
   	    $("#pageslide-blanket").click(function(){ return false; });
       }
-          
-	    $("#pageslide-slide-wrap").click(function(){ return false; });
-	    
-	    if (settings.modal != true) {
-	      $(document).unbind('click').click(function(elm) { _closeSlide(elm); return false });
-	    }
-	    
+          	    
 	    // Callback events for window resizing
 	    $(window).resize(function(){
         $("#pageslide-body-wrap").width( $("body").width() );
@@ -81,6 +76,7 @@
 	  };
 	  
 		function _openSlide(elm) {
+		  if($("#pageslide-slide-wrap").width() != 0) return false;
 		  _showBlanket();
 		  settings.start();
 		  // decide on a direction
@@ -92,7 +88,7 @@
 		  else {
 		    direction = {left:"-"+settings.width};
 		    $("#pageslide-slide-wrap").css({right:0});
-		  };
+		  }
     	$("#pageslide-slide-wrap").animate({width: settings.width}, settings.duration);
 		  $("#pageslide-body-wrap").animate(direction, settings.duration, function() {
 		    settings.stop();
@@ -114,7 +110,6 @@
   		              _closeSlide(elm);
   		              $(this).find('pageslide-close').unbind('click');
   		            });
-  		            
   		            settings.complete();
   		          });
   		      }
@@ -122,8 +117,8 @@
 		  });
 		};
 		
-		function _closeSlide(elm) {
-		  if ($(elm)[0].button != 2 && $("#pageslide-slide-wrap").css('width') != "0px") { // if not right click.
+		function _closeSlide(event) {
+		  if ($(event)[0].button != 2 && $("#pageslide-slide-wrap").css('width') != "0px") { // if not right click.
 		    _hideBlanket();
   		  settings.start();
   		  direction = ($("#pageslide-slide-wrap").css("left") != "0px") ? {left: "0"} : {right: "0"};
@@ -165,8 +160,12 @@
     return this.each(function(){
       $(this).unbind("click").bind("click", function(){
     	  _openSlide(this);
+    	  $("#pageslide-slide-wrap").click(function(){ return false; });
+    	  if (settings.modal != true) {
+  	      $(document).unbind('click').click(function(evt) { _closeSlide(evt); return false });
+  	    }
     	  return false;
-    	});
+    	});	
     });
     
   };
