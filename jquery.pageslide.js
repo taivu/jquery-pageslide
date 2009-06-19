@@ -42,20 +42,16 @@
       
       // Create and prepare elements for pageSlide
       
-      if ($("#pageslide-body-wrap").size() == 0) {
+      if ($("#pageslide-body-wrap, #pageslide-content, #pageslide-slide-wrap").size() == 0) {
+        
         var psBodyWrap = document.createElement("div");
         $(psBodyWrap).css(pageslide_body_wrap_css);
         $(psBodyWrap).attr("id","pageslide-body-wrap").width( $("body").width() );
         $("body").contents().wrapAll( psBodyWrap );
   	    
-      }
-
-      if ($("#pageslide-content").size() == 0) {
         var psSlideContent = document.createElement("div");
         $(psSlideContent).attr("id","pageslide-content").width( settings.width );
-      }
 
-      if ($("#pageslide-slide-wrap").size() == 0) {
         var psSlideWrap = document.createElement("div");
         $(psSlideWrap).css(pageslide_slide_wrap_css);
         $(psSlideWrap).attr("id","pageslide-slide-wrap").append( psSlideContent );
@@ -91,6 +87,7 @@
 		  if (settings.direction == "right") {
 		    direction = {right:"-"+settings.width};
 		    $("#pageslide-slide-wrap").css({left:0});
+		    $("body").css({overflowX:'hidden'});
 		  } 
 		  else {
 		    direction = {left:"-"+settings.width};
@@ -136,6 +133,7 @@
   	      // clear bug
   	      $('#pageslide-body-wrap, #pageslide-slide-wrap').css('left','');
   	      $('#pageslide-body-wrap, #pageslide-slide-wrap').css('right','');
+  	      $("body").css({overflowX:''});
           settings.stop();
           settings.complete();
         });
