@@ -87,7 +87,7 @@
 		  if (settings.direction == "right") {
 		    direction = {right:"-"+settings.width};
 		    $("#pageslide-slide-wrap").css({left:0});
-		    $("body").css({overflowX:'hidden'});
+        _overflowFixAdd();
 		  } 
 		  else {
 		    direction = {left:"-"+settings.width};
@@ -133,7 +133,7 @@
   	      // clear bug
   	      $('#pageslide-body-wrap, #pageslide-slide-wrap').css('left','');
   	      $('#pageslide-body-wrap, #pageslide-slide-wrap').css('right','');
-  	      $("body").css({overflowX:''});
+  	      _overflowFixRemove();
           settings.stop();
           settings.complete();
         });
@@ -156,6 +156,9 @@
 	    }
 	  };
 	  
+	  // fixes an annoying horizontal scrollbar.
+	  function _overflowFixAdd(){($.browser.msie) ? $("body, html").css({overflowX:'hidden'}) : $("body").css({overflowX:'hidden'});}
+	  function _overflowFixRemove(){($.browser.msie) ? $("body, html").css({overflowX:''}) : $("body").css({overflowX:''});}
 		
     // Initalize pageslide, if it hasn't already been done.
     _initialize(this);
