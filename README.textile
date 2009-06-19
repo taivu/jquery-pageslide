@@ -68,7 +68,7 @@ h3. Setup multiple PageSlides on the same page
 If you want to have multiple slides on the same page, simply define more!
 
 <pre><code>$("#my_anchor").pageSlide({width:'350px', modal:true});
-  $("#foobar").pageSlide({width:'150px', direction:'right'});
+$("#foobar").pageSlide({width:'150px', direction:'right'});
 </code></pre>
 
 h2. I found a BUG! or I want it to do THIS!
