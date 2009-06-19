@@ -16,6 +16,7 @@ h2. Features
 h2. Demo
 
 See the @demo/index.html@ file for a demo of all the options of PageSlide
+or "Click Here":http://derekperez.com/jquery-pageslide/demo/ for a live demo.
 
 h2. Requirements
 
