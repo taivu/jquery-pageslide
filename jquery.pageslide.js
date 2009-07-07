@@ -95,11 +95,6 @@
   		          .queue(function(){
   		            $(this).dequeue();
   		            
-  		            // restore working order to all anchors
-  		            $("#pageslide-slide-wrap a").unbind('click').click(function(elm){
-  		              document.location.href = elm.target.href;
-  		            });
-  		            
   		            // add hook for a close button
   		            $(this).find('.pageslide-close').unbind('click').click(function(elm){
   		              _closeSlide(elm);
@@ -132,9 +127,9 @@
     return this.each(function(){
       $(this).unbind("click").bind("click", function(){
     	  _openSlide(this);
-    	  $("#pageslide-slide-wrap").click(function(){ return false; });
+    	  $("#pageslide-slide-wrap").unbind('click').click(function(e){ if(e.target.tagName != "A") return false; });	  
     	  if (settings.modal != true) {
-  	      $(document).unbind('click').click(function(evt) { _closeSlide(evt); return false });
+  	      $(document).unbind('click').click(function(e) { if(e.target.tagName != "A"){ _closeSlide(e); return false } });
   	    }
     	  return false;
     	});	
