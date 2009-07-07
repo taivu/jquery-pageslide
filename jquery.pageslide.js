@@ -39,7 +39,6 @@
 		function _initialize(anchor) {
       
       // Create and prepare elements for pageSlide
-      
       if ($("#pageslide-body-wrap, #pageslide-content, #pageslide-slide-wrap").size() == 0) {
         
         var psBodyWrap = document.createElement("div");
@@ -70,6 +69,10 @@
 	    $(window).resize(function(){
         $("#pageslide-body-wrap").width( $("body").width() );
       });
+      
+      // mark the anchor!
+      $(anchor).attr("rel","pageslide");
+      
 	  };
 	  
 		function _openSlide(elm) {
