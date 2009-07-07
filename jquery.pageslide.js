@@ -6,9 +6,6 @@
 		    duration:       "normal", // Accepts standard jQuery effects speeds (i.e. fast, normal or milliseconds)
 		    direction:      "left", // default direction is left.
 		    modal:          false, // if true, the only way to close the pageslide is to define an explicit close class. 
-		    start:          function(){}, // event trigger that fires at the start of every open and close.
-		    stop:           function(){}, // event trigger that fires at the end of every open and close.
-		    complete:       function(){}, // event trigger that fires once an open or close has completed.
 		    _identifier: $(this)
 		}, options);
 		
@@ -78,7 +75,6 @@
 		function _openSlide(elm) {
 		  if($("#pageslide-slide-wrap").width() != 0) return false;
 		  _showBlanket();
-		  settings.start();
 		  // decide on a direction
 		  if (settings.direction == "right") {
 		    direction = {right:"-"+settings.width};
@@ -91,12 +87,11 @@
 		  }
     	$("#pageslide-slide-wrap").animate({width: settings.width}, settings.duration);
 		  $("#pageslide-body-wrap").animate(direction, settings.duration, function() {
-		    settings.stop();
 	      $.ajax({
   		      type: "GET",
   		      url: $(elm).attr("href"),
   		      success: function(data){
-  		        $("#pageslide-content").html(data)
+  		        $("#pageslide-content").css("width",settings.width).html(data)
   		          .queue(function(){
   		            $(this).dequeue();
   		            
@@ -110,7 +105,6 @@
   		              _closeSlide(elm);
   		              $(this).find('pageslide-close').unbind('click');
   		            });
-  		            settings.complete();
   		          });
   		      }
   		    });
@@ -119,19 +113,7 @@
 		
 		function _closeSlide(event) {
 		  if ($(event)[0].button != 2 && $("#pageslide-slide-wrap").css('width') != "0px") { // if not right click.
-		    _hideBlanket();
-  		  settings.start();
-  		  direction = ($("#pageslide-slide-wrap").css("left") != "0px") ? {left: "0"} : {right: "0"};
-  		  $("#pageslide-body-wrap").animate(direction, settings.duration);
-  	    $("#pageslide-slide-wrap").animate({width: "0"}, settings.duration, function() {
-  	      // clear bug
-  	      $("#pageslide-content").css('width', '0px').empty();
-  	      $('#pageslide-body-wrap, #pageslide-slide-wrap').css('left','');
-  	      $('#pageslide-body-wrap, #pageslide-slide-wrap').css('right','');
-  	      _overflowFixRemove();
-          settings.stop();
-          settings.complete();
-        });
+        $.fn.pageSlideClose(settings);
       }
 		};
 		
@@ -141,19 +123,9 @@
 	      $("#pageslide-blanket").toggle().animate({opacity:'0.8'}, 'fast','linear');
 	    }
 	  };
-	  
-	  // this is used to deactivate the modal blanket, if the modal setting is defined as true.
-	  function _hideBlanket(){
-	    if (settings.modal == true) {
-  	    $("#pageslide-blanket").animate({opacity:'0.0'}, 'fast','linear',function(){
-  	      $(this).toggle();
-  	    });
-	    }
-	  };
-	  
+
 	  // fixes an annoying horizontal scrollbar.
 	  function _overflowFixAdd(){($.browser.msie) ? $("body, html").css({overflowX:'hidden'}) : $("body").css({overflowX:'hidden'});}
-	  function _overflowFixRemove(){($.browser.msie) ? $("body, html").css({overflowX:''}) : $("body").css({overflowX:''});}
 		
     // Initalize pageslide, if it hasn't already been done.
     _initialize(this);
@@ -169,4 +141,45 @@
     });
     
   };
+})(jQuery);
+
+// pageSlideClose allows the system to automatically close any pageslide that is currently open in the view.
+(function($){
+  $.fn.pageSlideClose = function(options) {
+    
+    var settings = $.extend({
+		    width:          "300px", // Accepts fixed widths
+		    duration:       "normal", // Accepts standard jQuery effects speeds (i.e. fast, normal or milliseconds)
+		    direction:      "left", // default direction is left.
+		    modal:          false, // if true, the only way to close the pageslide is to define an explicit close class. 
+		    _identifier: $(this)
+		}, options);
+		
+		function _hideBlanket() { if(settings.modal == true && $("#pageslide-blanket").is(":visible")) {
+      $("#pageslide-blanket").animate({opacity:'0.0'}, 'fast','linear',function(){$(this).hide();});
+    }}
+    
+    function _overflowFixRemove(){($.browser.msie) ? $("body, html").css({overflowX:''}) : $("body").css({overflowX:''});}
+		
+    _hideBlanket();
+    direction = ($("#pageslide-slide-wrap").css("left") != "0px") ? {left: "0"} : {right: "0"};
+	  $("#pageslide-body-wrap").animate(direction, settings.duration);
+    $("#pageslide-slide-wrap").animate({width: "0"}, settings.duration, function() {
+      // clear bug
+      $("#pageslide-content").css("width","0px").empty();
+      $('#pageslide-body-wrap, #pageslide-slide-wrap').css('left','');
+      $('#pageslide-body-wrap, #pageslide-slide-wrap').css('right','');
+      _overflowFixRemove();
+    });
+    
+  }
+})(jQuery);
+
+// this adds the ability to close pageSlide with the 'escape' key, if not modal.
+(function($){
+  $(document).ready(function(){
+    $(document).keyup(function(event){
+      if (!$("#pageslide-blanket").is(":visible") && event.keyCode == 27) $.fn.pageSlideClose();
+    });
+  });
 })(jQuery);
