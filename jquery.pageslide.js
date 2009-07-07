@@ -124,8 +124,8 @@
   		  direction = ($("#pageslide-slide-wrap").css("left") != "0px") ? {left: "0"} : {right: "0"};
   		  $("#pageslide-body-wrap").animate(direction, settings.duration);
   	    $("#pageslide-slide-wrap").animate({width: "0"}, settings.duration, function() {
-  	      $("#pageslide-content").css('width', '0%').empty();
   	      // clear bug
+  	      $("#pageslide-content").css('width', '0px').empty();
   	      $('#pageslide-body-wrap, #pageslide-slide-wrap').css('left','');
   	      $('#pageslide-body-wrap, #pageslide-slide-wrap').css('right','');
   	      _overflowFixRemove();
