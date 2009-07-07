@@ -2,6 +2,12 @@ h1. jQuery PageSlide Plugin
 
 A jQuery JavaScript plugin which slides a webpage over to reveal an additional interaction pane. 
 
+h3. New Version 1.2! (July 6th, 2009)
+
+* Numerous bug fixes
+* added jQuery.pageSlideClose() method to close any currently open pageSlide, manually.
+* close any pageSlide using your escape key! (except modals).
+
 
 h2. Features
 
