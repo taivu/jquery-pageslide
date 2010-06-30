@@ -92,8 +92,7 @@ modal:          false, // if true, the only way to close the pageslide is to def
 
 h2. I found a BUG! or I want it to do THIS!
 
-Please file a ticket on our github issues tracker, and we will will address them all.
-
+Please file a ticket and attempt to contribute a patch!
 
 Enjoy!
 Scott Robbins and Derek Perez 2009
