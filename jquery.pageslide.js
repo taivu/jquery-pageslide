@@ -2,6 +2,7 @@
   $.fn.pageSlide = function(options) {
     
     var settings = $.extend({
+		    callback: function(){}, //Function to be called after ajax loaded
 		    width:          "300px", // Accepts fixed widths
 		    duration:       "normal", // Accepts standard jQuery effects speeds (i.e. fast, normal or milliseconds)
 		    direction:      "left", // default direction is left.
@@ -103,6 +104,9 @@
   		              _closeSlide(elm);
   		              $(this).find('pageslide-close').unbind('click');
   		            });
+			
+			    //Callback for initializations
+			    settings.callback();
   		          });
   		      }
   		    });
