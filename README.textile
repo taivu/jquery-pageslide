@@ -83,6 +83,7 @@ h3. What are all the different options I can pass into PageSlide?
 Here they are:
 
 <pre><code>var settings = $.extend({
+callback: function(){}, //Function to be called after the ajax request loaded
 width:          "300px", // Accepts fixed widths
 duration:       "normal", // Accepts standard jQuery effects speeds (i.e. fast, normal or milliseconds)
 direction:      "left", // default direction is left.
