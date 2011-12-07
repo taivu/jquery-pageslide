@@ -38,7 +38,7 @@ Ideally, near the bottom of the page.
 <script type="text/javascript" src="jquery.pageslide.min.js"></script>
 </code></pre>
 
-To use, call pageslide on an <a> tag that either links to a page or an anchor of a hidden element.
+To use, call pageslide on an <code><a></code> tag that either links to a page or an anchor of a hidden element.
 <pre><code><script type="text/javascript">
     $('a').pageslide();
 </script>
