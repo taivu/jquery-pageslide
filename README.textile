@@ -24,6 +24,10 @@ h3. iframe
 
 By default, linked pages are loaded into an iframe. Set this to false if you don't want an iframe. (default=true)
 
+h3. href
+
+Override the source of the content. Optional in most cases, but required when opening pageslide programmatically (e.g. <code>$.pageslide({ href: '#some-element' });</code> ) (default=null)
+
 h2. Setup
 
 In the HEAD tag:
@@ -37,6 +41,19 @@ Ideally, near the bottom of the page.
 To use, call pageslide on an <a> tag that either links to a page or an anchor of a hidden element.
 <pre><code><script type="text/javascript">
     $('a').pageslide();
+</script>
+</code></pre>
+
+Or, open pageslide programatically:
+<pre><code><script type="text/javascript">
+    $.pageslide({ href: '#some-element' });
+    $.pageslide({ href: 'some-page.html' });
+</script>
+</code></pre>
+
+To close pageslide programatically:
+<pre><code><script type="text/javascript">
+    $.pageslide.close();
 </script>
 </code></pre>
 

@@ -46,7 +46,7 @@
                 <pre>
 &lt;a href=&quot;_secondary.html&quot; class=&quot;first&quot;&gt;Link text&lt;/a&gt;
 &lt;script&gt;
-    $(&quot;a.first&quot;).pageSlide();
+    $(&quot;a.first&quot;).pageslide();
 &lt;/script&gt;
                 </pre>
             </li>
@@ -59,8 +59,14 @@
     &lt;a href=&quot;javascript:$.pageslide.close()&quot;&gt;Close&lt;/a&gt;
 &lt;/div&gt;
 &lt;script&gt;
-    $(&quot;.second&quot;).pageSlide({ direction: &quot;left&quot;, modal: true });
+    $(&quot;.second&quot;).pageslide({ direction: &quot;left&quot;, modal: true });
 &lt;/script&gt;
+                </pre>
+            </li>
+            <li>
+                <a href="javascript:$.pageslide({ direction: 'left', href: '_secondary.html' })">Open the page programatically.</a>
+                <pre>
+&lt;a href=&quot;javascript:$.pageslide({ direction: &#39;left&#39;, href=&#39;_secondary.html&#39; })&quot;&gt;Link text&lt;/a&gt;
                 </pre>
             </li>
         </ul>
@@ -74,10 +80,10 @@
     <script src="../jquery.pageslide.min.js"></script>
     <script>
         /* Default pageslide, moves to the right */
-        $(".first").pageSlide();
+        $(".first").pageslide();
         
         /* Slide to the left, and make it model (you'll have to call $.pageslide.close() to close) */
-        $(".second").pageSlide({ direction: "left", modal: true });
+        $(".second").pageslide({ direction: "left", modal: true });
     </script>
 </body>
 </html>
