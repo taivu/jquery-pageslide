@@ -76,6 +76,9 @@
         }
         
         /* Media Queries
+        * 
+        * Note: Please don't base your responsive design off of this code. It is just here for demo purposes.
+        * Rather, grab yourself a copy of Ethan's book: http://www.abookapart.com/products/responsive-web-design
         ================================================== */
         
         /* Mobile and iPad Portrait */
@@ -117,6 +120,7 @@
         <div class="copy">
             <p>If you've ever used the <a href="http://m.facebook.com">mobile version of Facebook</a>, or <a href="http://www.path.com">Path</a>, then you've probably seen something akin to PageSlide in action.</p>
             <p>In this example, resizing the browser to a smaller window (less than or equal to an iPhone's landscape view) will collapse and hide the faux menu nav above. Clicking on the menu icon will then trigger PageSlide to open.</a>
+            <p>Don't really care about this demo, and just want to see PageSlide in action? <a class="impatient" href="_secondary.html">Click away, my friend.</a></a>
             <h3>Interested in learning more about PageSlide?</h3>
             <p><a href="https://github.com/srobbin/jquery-pageslide">Fork or download this project on GitHub</a><br />
                 <a href="http://srobbin.com/blog/jquery-pageslide/">Visit the original project page on Scott Robbin's website</a></p>
@@ -128,7 +132,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="jquery.pageslide.min.js"></script>
     <script>
-        $(".open").pageslide();
+        $(".open, .impatient").pageslide();
     </script>
 </body>
 </html>
