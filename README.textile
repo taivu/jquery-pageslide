@@ -4,7 +4,7 @@ PageSlide is a jQuery plugin which slides a webpage over to reveal an additional
 
 h2. Demo
 
-There are a couple of examples included with this package. Or, if you can't wait to download it, see it live on the "responsive demo":http://srobbin.github.com/jquery-pageslide or "original project page":http://srobbin.com/blog/jquery-pageslide/.
+There are a couple of examples included with this package. Or, if you can't wait to download it, see it live on the "responsive demo":http://srobbin.github.com/jquery-pageslide or "original project page":http://srobbin.com/jquery-plugins/pageslide/.
 
 h2. Options
 
