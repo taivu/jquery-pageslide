@@ -68,9 +68,3 @@ h3. Version 2.0
 h3. Version 1.3
 
 * Older versions of PageSlide are located in this repository, however if you would like to contribute to the original plugin's development, please use contributor "Derek Perez's repository":https://github.com/perezd/jquery-pageslide.
-
-h2. Support
-
-Basic support is offered through Github’s issues tracker. Many requests are resolved through the help of fellow PageSlide users and myself, however assistance is not guaranteed or timely.
-
-If you are in need of immediate support, or would like customizations to the script, "Premium Support":https://www.paypal.com/cgi-bin/webscr?business=scott@halobrite.com&cmd=_xclick&currency_code=USD&amount=17&item_name=jQuery%20PageSlide%20Premium%20Support is available for $17. Premium Support provides you with direct email access to me, and allows me to set time aside to help solve your problem quickly.
