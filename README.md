@@ -2,7 +2,7 @@
 
 PageSlide is a jQuery plugin which slides a webpage over to reveal an additional interaction pane.
 
-Note: This respository is not actively maintained. In fact, I don't recommend using it. There are plenty of [alternatives out there](http://www.unheap.com/section/navigation/drawer-responsive/).
+**Note: This respository is not actively maintained. In fact, I don't recommend using it. There are plenty of [alternatives out there](http://www.unheap.com/section/navigation/drawer-responsive/).**
 
 ## Demo
 
