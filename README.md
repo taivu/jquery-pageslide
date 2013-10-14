@@ -34,7 +34,7 @@ Override the source of the content. Optional in most cases, but required when op
 
 In the HEAD tag:
 ```
-<pre><code><link rel="stylesheet" type="text/css" href="jquery.pageslide.css"></code></pre>
+<link rel="stylesheet" type="text/css" href="jquery.pageslide.css">
 ```
 
 Ideally, near the bottom of the page.
