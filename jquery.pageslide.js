@@ -1,6 +1,9 @@
+/* ==========================================================================
+   Tai Vu CUSTOM - jQuery pageSlide - v2.1 
+   ========================================================================== */
 /*
  * jQuery pageSlide
- * Version 2.0
+ * Version 2.1
  * http://srobbin.com/jquery-pageslide/
  *
  * jQuery Javascript plugin which slides a webpage over to reveal an additional interaction pane.
@@ -17,7 +20,7 @@
     var _sliding = false,   // Mutex to assist closing only once
         _lastCaller;        // Used to keep track of last element to trigger pageslide
     
-	// If the pageslide element doesn't exist, create it
+    // If the pageslide element doesn't exist, create it
     if( $pageslide.length == 0 ) {
          $pageslide = $('<div />').attr( 'id', 'pageslide' )
                                   .css( 'display', 'none' )
@@ -28,31 +31,50 @@
      * Private methods 
      */
     function _load( url, useIframe ) {
-        // Are we loading an element from the page or a URL?
-        if ( url.indexOf("#") === 0 ) {                
-            // Load a page element                
-            $(url).clone(true).appendTo( $pageslide.empty() ).show();
-        } else {
-            // Load a URL. Into an iframe?
-            if( useIframe ) {
-                var iframe = $("<iframe />").attr({
-                                                src: url,
-                                                frameborder: 0,
-                                                hspace: 0
-                                            })
-                                            .css({
-                                                width: "100%",
-                                                height: "100%"
-                                            });
-                
-                $pageslide.html( iframe );
-            } else {
-                $pageslide.load( url );
+
+        // TV: check to see if URL is array of URLs or a string 
+        if ( Object.prototype.toString.call(url) === '[object Array]' ) {
+            // TV: begin new feature
+            var urlIndex;
+
+            //empty before adding
+            $pageslide.empty();
+
+            // iterate through array of URLS
+            for (urlIndex = 0; urlIndex < url.length; ++urlIndex) {
+                if ( url[urlIndex].indexOf("#") === 0) {
+                    $(url[urlIndex]).clone(true).appendTo( $pageslide ).show();
+                }
             }
-            
-            $pageslide.data( 'localEl', false );
-            
+        } else {
+            // TV: Original plugin contents
+            // Are we loading an element from the page or a URL?
+            if ( url.indexOf("#") === 0 ) {                
+                // Load a page element                
+                $(url).clone(true).appendTo( $pageslide.empty() ).show();
+            } else {
+                // Load a URL. Into an iframe?
+                if( useIframe ) {
+                    var iframe = $("<iframe />").attr({
+                                                    src: url,
+                                                    frameborder: 0,
+                                                    hspace: 0
+                                                })
+                                                .css({
+                                                    width: "100%",
+                                                    height: "100%"
+                                                });
+                    
+                    $pageslide.html( iframe );
+                } else {
+                    $pageslide.load( url );
+                }
+                
+                $pageslide.data( 'localEl', false );
+                
+            }
         }
+
     }
     
     // Function that controls opening of the pageslide
@@ -62,7 +84,7 @@
             slideAnimateIn = {};
         
         // If the slide is open or opening, just ignore the call
-        if( $pageslide.is(':visible') || _sliding ) return;	        
+        if( $pageslide.is(':visible') || _sliding ) return;         
         _sliding = true;
                                                                     
         switch( direction ) {
@@ -112,9 +134,9 @@
                 _lastCaller = $self[0];
             }       
         });                   
-	};
-	
-	/*
+    };
+    
+    /*
      * Default settings 
      */
     $.fn.pageslide.defaults = {
@@ -124,17 +146,17 @@
         iframe:     true,       // By default, linked pages are loaded into an iframe. Set this to false if you don't want an iframe.
         href:       null        // Override the source of the content. Optional in most cases, but required when opening pageslide programmatically.
     };
-	
-	/*
+    
+    /*
      * Public methods 
      */
-	
-	// Open the pageslide
-	$.pageslide = function( options ) {	    
-	    // Extend the settings with those the user has provided
+    
+    // Open the pageslide
+    $.pageslide = function( options ) {     
+        // Extend the settings with those the user has provided
         var settings = $.extend({}, $.fn.pageslide.defaults, options);
-	    
-	    // Are we trying to open in different direction?
+        
+        // Are we trying to open in different direction?
         if( $pageslide.is(':visible') && $pageslide.data( 'direction' ) != settings.direction) {
             $.pageslide.close(function(){
                 _load( settings.href, settings.iframe );
@@ -148,18 +170,18 @@
         }
         
         $pageslide.data( settings );
-	}
-	
-	// Close the pageslide
-	$.pageslide.close = function( callback ) {
+    }
+    
+    // Close the pageslide
+    $.pageslide.close = function( callback ) {
         var $pageslide = $('#pageslide'),
             slideWidth = $pageslide.outerWidth( true ),
             speed = $pageslide.data( 'speed' ),
             bodyAnimateIn = {},
             slideAnimateIn = {}
-            	        
+                        
         // If the slide isn't open, just ignore the call
-        if( $pageslide.is(':hidden') || _sliding ) return;	        
+        if( $pageslide.is(':hidden') || _sliding ) return;          
         _sliding = true;
         
         switch( $pageslide.data( 'direction' ) ) {
@@ -180,23 +202,23 @@
             if( typeof callback != 'undefined' ) callback();
         });
     }
-	
-	/* Events */
-	
-	// Don't let clicks to the pageslide close the window
+    
+    /* Events */
+    
+    // Don't let clicks to the pageslide close the window
     $pageslide.click(function(e) {
         e.stopPropagation();
     });
 
-	// Close the pageslide if the document is clicked or the users presses the ESC key, unless the pageslide is modal
-	$(document).bind('click keyup', function(e) {
-	    // If this is a keyup event, let's see if it's an ESC key
+    // Close the pageslide if the document is clicked or the users presses the ESC key, unless the pageslide is modal
+    $(document).bind('click keyup', function(e) {
+        // If this is a keyup event, let's see if it's an ESC key
         if( e.type == "keyup" && e.keyCode != 27) return;
-	    
-	    // Make sure it's visible, and we're not modal	    
-	    if( $pageslide.is( ':visible' ) && !$pageslide.data( 'modal' ) ) {	        
-	        $.pageslide.close();
-	    }
-	});
-	
+        
+        // Make sure it's visible, and we're not modal      
+        if( $pageslide.is( ':visible' ) && !$pageslide.data( 'modal' ) ) {          
+            $.pageslide.close();
+        }
+    });
+    
 })(jQuery);
