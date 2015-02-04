@@ -1,17 +1,23 @@
 /* ==========================================================================
-   Tai Vu CUSTOM - jQuery pageSlide - v2.1 
-   ========================================================================== */
-/*
- * jQuery pageSlide
- * Version 2.1
- * http://srobbin.com/jquery-pageslide/
- *
- * jQuery Javascript plugin which slides a webpage over to reveal an additional interaction pane.
- *
- * Copyright (c) 2011 Scott Robbin (srobbin.com)
- * Dual licensed under the MIT and GPL licenses.
-*/
+    Tai Vu CUSTOM - jQuery pageSlide - v2.2 
 
+    Changelog:
+
+    2.2: added ability to pass in classes with ID's (.foo, #bar)
+    2.1: added ability to pass in an array of items
+
+
+    ORIGINAL CODE:
+
+    jQuery pageSlide
+    http://srobbin.com/jquery-pageslide/
+
+    jQuery Javascript plugin which slides a webpage over to reveal an additional interaction pane.
+
+    Copyright (c) 2011 Scott Robbin (srobbin.com)
+    Dual licensed under the MIT and GPL licenses.
+
+   ========================================================================== */
 ;(function($){
     // Convenience vars for accessing elements
     var $body = $('body'),
@@ -32,7 +38,7 @@
      */
     function _load( url, useIframe ) {
 
-        // TV: check to see if URL is array of URLs or a string 
+        // TV: check to see if URL is array of URLs or a string - multiple targets
         if ( Object.prototype.toString.call(url) === '[object Array]' ) {
             // TV: begin new feature
             var urlIndex;
@@ -45,9 +51,15 @@
                 if ( url[urlIndex].indexOf("#") === 0) {
                     $(url[urlIndex]).clone(true).appendTo( $pageslide ).show();
                 }
+
+                // TV: modified to also take classes, instead of ID's only
+                if ( url[urlIndex].indexOf(".") === 0) {
+                    $(url[urlIndex]).clone(true).appendTo( $pageslide ).show();
+                    console.log(url[urlIndex]);
+                }
             }
         } else {
-            // TV: Original plugin contents
+            // TV: Original plugin contents - one target
             // Are we loading an element from the page or a URL?
             if ( url.indexOf("#") === 0 ) {                
                 // Load a page element                
@@ -106,6 +118,7 @@
                   .animate(slideAnimateIn, speed, function() {
                       _sliding = false;
                   });
+        $body.addClass('menuOpen');
     }
       
     /*
@@ -201,24 +214,29 @@
             _sliding = false;
             if( typeof callback != 'undefined' ) callback();
         });
+        $body.removeClass('menuOpen');
     }
     
     /* Events */
     
     // Don't let clicks to the pageslide close the window
-    $pageslide.click(function(e) {
+    // $pageslide.click(function(e) {
+    //     e.stopPropagation();
+    // });
+    $pageslide.on('click tap', function(e) {
         e.stopPropagation();
     });
 
+
     // Close the pageslide if the document is clicked or the users presses the ESC key, unless the pageslide is modal
-    $(document).bind('click keyup', function(e) {
+    $(document).bind('click keyup tap', function(e) {
         // If this is a keyup event, let's see if it's an ESC key
         if( e.type == "keyup" && e.keyCode != 27) return;
-        
+
         // Make sure it's visible, and we're not modal      
-        if( $pageslide.is( ':visible' ) && !$pageslide.data( 'modal' ) ) {          
+        if( $pageslide.is( ':visible' ) && !$pageslide.data( 'modal' ) ) {
             $.pageslide.close();
+            e.preventDefault();
         }
     });
-    
 })(jQuery);
